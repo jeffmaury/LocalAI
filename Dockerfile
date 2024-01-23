@@ -101,7 +101,7 @@ RUN if [ "${BUILD_GRPC}" = "true" ]; then \
     ; fi
 
 # Rebuild with defaults backends
-RUN make build
+RUN make GRPC_BACKENDS=${GRPC_BACKENDS} build
 
 RUN if [ ! -d "/build/sources/go-piper/piper-phonemize/pi/lib/" ]; then \
     mkdir -p /build/sources/go-piper/piper-phonemize/pi/lib/ \
@@ -156,45 +156,45 @@ COPY --from=builder /build/sources/go-piper/piper-phonemize/pi/lib/* /usr/lib/
 COPY --from=builder /build/backend-assets/grpc/stablediffusion ./backend-assets/grpc/stablediffusion
 
 ## Duplicated from Makefile to avoid having a big layer that's hard to push
-RUN if [ "${IMAGE_TYPE}" = "extras" ]; then \
-	PATH=$PATH:/opt/conda/bin make -C backend/python/autogptq \
-    ; fi
-RUN if [ "${IMAGE_TYPE}" = "extras" ]; then \
-	PATH=$PATH:/opt/conda/bin make -C backend/python/bark \
-    ; fi
-RUN if [ "${IMAGE_TYPE}" = "extras" ]; then \
-	PATH=$PATH:/opt/conda/bin make -C backend/python/diffusers \
-    ; fi
-RUN if [ "${IMAGE_TYPE}" = "extras" ]; then \
-	PATH=$PATH:/opt/conda/bin make -C backend/python/vllm \
-    ; fi
-RUN if [ "${IMAGE_TYPE}" = "extras" ]; then \
-	PATH=$PATH:/opt/conda/bin make -C backend/python/mamba \
-    ; fi
-RUN if [ "${IMAGE_TYPE}" = "extras" ]; then \
-	PATH=$PATH:/opt/conda/bin make -C backend/python/sentencetransformers \
-    ; fi
-RUN if [ "${IMAGE_TYPE}" = "extras" ]; then \
-	PATH=$PATH:/opt/conda/bin make -C backend/python/transformers \
-    ; fi
-RUN if [ "${IMAGE_TYPE}" = "extras" ]; then \
-	PATH=$PATH:/opt/conda/bin make -C backend/python/vall-e-x \
-    ; fi
-RUN if [ "${IMAGE_TYPE}" = "extras" ]; then \
-	PATH=$PATH:/opt/conda/bin make -C backend/python/exllama \
-    ; fi
-RUN if [ "${IMAGE_TYPE}" = "extras" ]; then \
-    PATH=$PATH:/opt/conda/bin make -C backend/python/exllama2 \
-    ; fi
-RUN if [ "${IMAGE_TYPE}" = "extras" ]; then \
-	PATH=$PATH:/opt/conda/bin make -C backend/python/petals \
-    ; fi
-RUN if [ "${IMAGE_TYPE}" = "extras" ]; then \
-	PATH=$PATH:/opt/conda/bin make -C backend/python/transformers-musicgen \
-    ; fi
-RUN if [ "${IMAGE_TYPE}" = "extras" ]; then \
-	PATH=$PATH:/opt/conda/bin make -C backend/python/coqui \
-    ; fi
+#RUN if [ "${IMAGE_TYPE}" = "extras" ]; then \
+#	PATH=$PATH:/opt/conda/bin make -C backend/python/autogptq \
+#    ; fi
+#RUN if [ "${IMAGE_TYPE}" = "extras" ]; then \
+#	PATH=$PATH:/opt/conda/bin make -C backend/python/bark \
+#    ; fi
+#RUN if [ "${IMAGE_TYPE}" = "extras" ]; then \
+#	PATH=$PATH:/opt/conda/bin make -C backend/python/diffusers \
+#    ; fi
+#RUN if [ "${IMAGE_TYPE}" = "extras" ]; then \
+#	PATH=$PATH:/opt/conda/bin make -C backend/python/vllm \
+#    ; fi
+#RUN if [ "${IMAGE_TYPE}" = "extras" ]; then \
+#	PATH=$PATH:/opt/conda/bin make -C backend/python/mamba \
+#    ; fi
+#RUN if [ "${IMAGE_TYPE}" = "extras" ]; then \
+#	PATH=$PATH:/opt/conda/bin make -C backend/python/sentencetransformers \
+#    ; fi
+#RUN if [ "${IMAGE_TYPE}" = "extras" ]; then \
+#	PATH=$PATH:/opt/conda/bin make -C backend/python/transformers \
+#    ; fi
+#RUN if [ "${IMAGE_TYPE}" = "extras" ]; then \
+#	PATH=$PATH:/opt/conda/bin make -C backend/python/vall-e-x \
+#    ; fi
+#RUN if [ "${IMAGE_TYPE}" = "extras" ]; then \
+#	PATH=$PATH:/opt/conda/bin make -C backend/python/exllama \
+#    ; fi
+#RUN if [ "${IMAGE_TYPE}" = "extras" ]; then \
+#    PATH=$PATH:/opt/conda/bin make -C backend/python/exllama2 \
+#    ; fi
+#RUN if [ "${IMAGE_TYPE}" = "extras" ]; then \
+#	PATH=$PATH:/opt/conda/bin make -C backend/python/petals \
+#    ; fi
+#RUN if [ "${IMAGE_TYPE}" = "extras" ]; then \
+#	PATH=$PATH:/opt/conda/bin make -C backend/python/transformers-musicgen \
+#    ; fi
+#RUN if [ "${IMAGE_TYPE}" = "extras" ]; then \
+#	PATH=$PATH:/opt/conda/bin make -C backend/python/coqui \
+#    ; fi
 
 # Make sure the models directory exists
 RUN mkdir -p /build/models
